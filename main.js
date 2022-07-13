@@ -6,8 +6,8 @@ client.on("ready", () => {
 })
 
 client.on("message", msg => {
-  if (msg.content === "ping") {
-    msg.reply("pong");
+  if (msg.content === "!ping") {
+    msg.reply("Client Latency: ${round(client.latency * 1000)}ms");
   }
 })
 
