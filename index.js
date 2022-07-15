@@ -1,29 +1,22 @@
-const Discord = require("discord.js")
-const client = new Discord.Client()
+const {Client, Intents} = require("discord.js");
+const intents = new Intents(32767);
+const client = new Client({intents});
 
-const axios = require('axios')
-const keepAlive = require("./keepAlive")
-
+// const axios = require('axios');
+const keepAlive = require("./keepAlive.js");
 
 client.on("ready", () => {
-    console.log('>> Logged in as ${client.user.tag}')
+    console.log(`>> Logged in as ${client.user.tag}`)
 })
 
 client.on('message', async msg => {
-    async function getMeme(){
-        const res = await axios.get('https://memeapi.pythonanywhere.com/');
-        return res.data.memes[0].url;
-    }
+    
     switch (msg.content) {
         case "$ping":
-            msg.reply("Client Latency: ${round(client.latency * 1000)}ms");
-            break;
-        case "!meme":
-//          msg.channel.send("");
-            const img = await getMeme();
-            msg.channel.send(img);
+            msg.reply(`Client Latency: ${Date.now() - msg.createdTimestamp}ms`);
             break;
     }
 })
-
-client.login(process.env.TOKEN)
+    
+keepAlive;
+client.login('token')
